@@ -28,5 +28,3 @@ def build_house():
         for z in range(length):
             blocks.place(Block.STONE_BRICKS_SLAB,
             positions.add(start, world(x, height, z)))
-
-player.on_chat("dom", build_house)
