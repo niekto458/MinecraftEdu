@@ -1,68 +1,40 @@
-def build_tree(pos):
-    # kmeň
+def tree(p):
     for y in range(4):
-        blocks.place(Block.OAK_LOG, positions.add(pos, world(0, y, 0)))
+        blocks.place(Block.LOG_OAK, positions.add(p, world(0, y, 0)))
+    blocks.fill(Block.LEAVES_OAK,
+        positions.add(p, world(-2, 3, -2)),
+        positions.add(p, world(2, 5, 2)),
+        FillOperation.REPLACE)
 
-    # listy
-    blocks.fill(
-        Block.OAK_LEAVES,
-        positions.add(pos, world(-2, 3, -2)),
-        positions.add(pos, world(2, 5, 2)),
-        FillOperation.REPLACE
-    )
-
-
-def build_house():
-    width = 7
-    length = 10
-    height = 4
-
-    start = player.position()
+def build():
+    w, l, h = 7, 10, 4
+    s = player.position()
 
     for i in range(3):
-        offset = positions.add(start, world(i * (width + 6), 0, 0))
+        o = positions.add(s, world(i * (w + 7), 0, 0))
 
-        # steny
-        for x in range(width):
-            for z in range(length):
-                for y in range(height):
-                    if x == 0 or x == width - 1 or z == 0 or z == length - 1:
-                        blocks.place(
-                            Block.STRIPPED_DARK_OAK_WOOD,
-                            positions.add(offset, world(x, y, z))
-                        )
+        for x in range(w):
+            for z in range(l):
+                for y in range(h):
+                    if x in (0, w-1) or z in (0, l-1):
+                        blocks.place(Block.STRIPPED_DARK_OAK_WOOD,
+                            positions.add(o, world(x, y, z)))
 
-        # vnútro
-        blocks.fill(
-            Block.AIR,
-            positions.add(offset, world(1, 1, 1)),
-            positions.add(offset, world(width - 2, height - 1, length - 2)),
-            FillOperation.REPLACE
-        )
+        blocks.fill(Block.AIR,
+            positions.add(o, world(1, 1, 1)),
+            positions.add(o, world(w-2, h-1, l-2)),
+            FillOperation.REPLACE)
 
-        # podlaha
-        for x in range(width):
-            for z in range(length):
-                blocks.place(
-                    Block.DARK_OAK_PLANKS,
-                    positions.add(offset, world(x, -1, z))
-                )
+        for x in range(w):
+            for z in range(l):
+                blocks.place(Block.PLANKS_DARK_OAK,
+                    positions.add(o, world(x, -1, z)))
+                blocks.place(Block.SMOOTH_STONE_SLAB,
+                    positions.add(o, world(x, h, z)))
 
-        # dvere
-        blocks.place(Block.OAK_DOOR, positions.add(offset, world(2, 0, 0)))
+        blocks.place(Block.OAK_DOOR, positions.add(o, world(2, 0, 0)))
 
-        # strecha
-        for x in range(width):
-            for z in range(length):
-                blocks.place(
-                    Block.SMOOTH_STONE_SLAB,
-                    positions.add(offset, world(x, height, z))
-                )
-
-        # 🌳 strom medzi domami (nie za posledným)
         if i < 2:
-            tree_pos = positions.add(offset, world(width + 2, 0, length // 2))
-            build_tree(tree_pos)
+            tree(positions.add(o, world(w+2, 0, l//2)))
 
-
-player.on_chat("dom", build_house)
+player.on_chat("dom", build)
