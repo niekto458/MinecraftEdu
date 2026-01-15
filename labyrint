@@ -1,0 +1,59 @@
+def build_maze():
+    start = player.position()
+
+    blocks.fill(
+        STONE,
+        positions.add(start, pos(0, -1, 0)),
+        positions.add(start, pos(20, -1, 20)),
+        FillOperation.REPLACE
+    )
+
+    blocks.fill(
+        AIR,
+        positions.add(start, pos(1, 0, 1)),
+        positions.add(start, pos(19, 3, 19)),
+        FillOperation.REPLACE
+    )
+
+    blocks.fill(COBBLESTONE, positions.add(start, pos(0, 0, 0)), positions.add(start, pos(20, 3, 0)), FillOperation.REPLACE)
+    blocks.fill(COBBLESTONE, positions.add(start, pos(0, 0, 0)), positions.add(start, pos(0, 3, 20)), FillOperation.REPLACE)
+    blocks.fill(COBBLESTONE, positions.add(start, pos(20, 0, 0)), positions.add(start, pos(20, 3, 20)), FillOperation.REPLACE)
+    blocks.fill(COBBLESTONE, positions.add(start, pos(0, 0, 20)), positions.add(start, pos(20, 3, 20)), FillOperation.REPLACE)
+
+    blocks.fill(COBBLESTONE, positions.add(start, pos(4, 0, 1)), positions.add(start, pos(4, 3, 18)), FillOperation.REPLACE)
+    blocks.fill(AIR, positions.add(start, pos(4, 0, 4)), positions.add(start, pos(4, 2, 6)), FillOperation.REPLACE)
+
+    blocks.fill(COBBLESTONE, positions.add(start, pos(8, 0, 3)), positions.add(start, pos(8, 3, 20)), FillOperation.REPLACE)
+    blocks.fill(AIR, positions.add(start, pos(8, 0, 12)), positions.add(start, pos(8, 2, 14)), FillOperation.REPLACE)
+
+    blocks.fill(COBBLESTONE, positions.add(start, pos(12, 0, 1)), positions.add(start, pos(12, 3, 18)), FillOperation.REPLACE)
+    blocks.fill(AIR, positions.add(start, pos(12, 0, 9)), positions.add(start, pos(12, 2, 11)), FillOperation.REPLACE)
+
+    blocks.fill(COBBLESTONE, positions.add(start, pos(16, 0, 3)), positions.add(start, pos(16, 3, 20)), FillOperation.REPLACE)
+    blocks.fill(AIR, positions.add(start, pos(16, 0, 15)), positions.add(start, pos(16, 2, 17)), FillOperation.REPLACE)
+
+    blocks.fill(COBBLESTONE, positions.add(start, pos(1, 0, 5)), positions.add(start, pos(18, 3, 5)), FillOperation.REPLACE)
+    blocks.fill(AIR, positions.add(start, pos(6, 0, 5)), positions.add(start, pos(8, 2, 5)), FillOperation.REPLACE)
+
+    blocks.fill(COBBLESTONE, positions.add(start, pos(3, 0, 10)), positions.add(start, pos(20, 3, 10)), FillOperation.REPLACE)
+    blocks.fill(AIR, positions.add(start, pos(14, 0, 10)), positions.add(start, pos(16, 2, 10)), FillOperation.REPLACE)
+
+    blocks.fill(COBBLESTONE, positions.add(start, pos(1, 0, 15)), positions.add(start, pos(18, 3, 15)), FillOperation.REPLACE)
+    blocks.fill(AIR, positions.add(start, pos(3, 0, 15)), positions.add(start, pos(5, 2, 15)), FillOperation.REPLACE)
+
+    blocks.fill(AIR, positions.add(start, pos(1, 0, 0)), positions.add(start, pos(2, 2, 0)), FillOperation.REPLACE)
+    blocks.place(GREEN_CARPET, positions.add(start, pos(1, 0, 1)))
+
+    blocks.place(GOLD_BLOCK, positions.add(start, pos(19, 0, 19)))
+
+    blocks.fill(
+        AIR,
+        positions.add(start, pos(19, 0, 20)),
+        positions.add(start, pos(19, 2, 20)),
+        FillOperation.REPLACE
+    )
+
+    player.say("🏁 Maze ready! Green = START, Gold = FINISH, hole = EXIT")
+
+
+player.on_chat("labyrint", build_maze)
